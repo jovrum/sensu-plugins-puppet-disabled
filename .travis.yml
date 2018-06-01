@@ -4,8 +4,9 @@ language: ruby
 cache:
 - bundler
 before_install:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - gem install bundler -v 1.15
+- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
+  -N DOCKER )
+- gem install bundler -v 1.15
 install:
 - bundle install
 rvm:
@@ -20,14 +21,14 @@ notifications:
     on_success: change
     on_failure: always
 script:
-  - gem build sensu-plugins-puppet-disabled.gemspec
-  - gem install sensu-plugins-puppet-disabled-*.gem
-  - bundle exec rake quick
-  - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
+- gem build sensu-plugins-puppet-disabled.gemspec
+- gem install sensu-plugins-puppet-disabled-*.gem
+- bundle exec rake quick
+- bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
 deploy:
   provider: rubygems
   api_key:
-    secure: <encrypted rubygems deploy key>
+    secure: Mf56+JHQ+9mdsfxq+RDr3ONHH7av4+vGnWEG68DkJfjq5lWhLuba6bFfSnPuCCC0F+eeE6P9AMRdKUNi6BGzLMSZo0LFVqSRHMBDQuCrI3Oi4W0s6zkZ9md2tqLuMLJ6qFKgeSUAe18WTdViDaxrzOmpKECBnyfNF7NzswXyy/qBX4fdhTJYWaD4CDdhStecv7HAdVCwgl2VHObFWpP6ggteGCaNnG1cMIhCZuXxlPRrV/DDlvVu+CQRhP5SKlIoUsHJad5hIarj9t80arn1yqDyvKG9tvFr6zmaiEm+QrZeim+W+DmI5CrPW0WwIMSAhIOWNmrNMsjb6e62/JQQzWVILIkk98P/5m9glkD6AiYtknt3uABIfMnvBfS00yi8F0DPtZ+4ryrjgAoONtRFlSN32YDtVQDZKL8AwmWAPMRiFqNrNRVT6TfAda0g+5Cr2PxEX0bUmhpgXqqpufiLpwLdk7qiDX56bviWqp5sLiSvXJUcZsfXDkf9k6AGaAG29MVy1CifZsSrQTIBNSoabYAdsZ+lEh+xWISZHV5XQGZBLAhbubcZo4eGiodqgpZURKynS+A9WeG6mmPu9DXn0hG6RymuGvmcmVYiEqUy3CblJXs0nubvwJxfFZGraQFihIEtOZT+jAaY99cphGiGH114L2r9TJBNR4b9Ie7681M=
   gem: sensu-plugins-puppet-disabled
   on:
     tags: true
